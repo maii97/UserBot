@@ -138,6 +138,9 @@ async def Updater(client, message):
 			await message.edit('Successfully Updated!\nBot is restarting...')
 		except exc.GitCommandError:
 			repo.git.reset('--hard')
+			repo.git.clean('-fd', 'nana/modules/')
+			repo.git.clean('-fd', 'nana/assistant/')
+			repo.git.clean('-fd', 'nana/helpers/')
 			await message.edit('Successfully Updated!\nBot is restarting...')
 		await update_changelog(changelog)
 		await restart_all()
