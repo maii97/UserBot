@@ -72,17 +72,25 @@ async def except_hook(errtype, value, tback):
 		text += "\nHint: Try this in your terminal `pip install -r requirements.txt`"
 	await setbot.send_message(Owner, text, reply_markup=button)
 
+async def reinitial():
+	await setbot.start()
+	await app.start()
+	await get_bot()
+	await get_self()
+	await setbot.stop()
+	await app.stop()
 
 async def start_bot():
 	# sys.excepthook = except_hook
+	print("----- Checking user and bot... -----")
+	await reinitial()
+	print("----------- Check done! ------------")
 	# Assistant bot
 	await setbot.start()
-	await get_bot()
 	for setting in ALL_SETTINGS:
 		imported_module = importlib.import_module("nana.assistant." + setting)
 	# Nana userbot
 	await app.start()
-	await get_self()
 	for modul in ALL_MODULES:
 		imported_module = importlib.import_module("nana.modules." + modul)
 		if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:

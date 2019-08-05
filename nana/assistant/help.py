@@ -2,7 +2,7 @@ import re
 import pyrogram
 
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQueryHandler
-from nana import setbot, Owner, log, Command, BotName
+from nana import setbot, AdminSettings, log, Command, BotName
 from __main__ import HELP_COMMANDS
 from nana.helpers.misc import paginate_modules
 
@@ -29,7 +29,7 @@ async def help_parser(client, chat_id, text, keyboard=None):
 	await client.send_message(chat_id, text, reply_markup=keyboard)
 
 
-@setbot.on_message(Filters.user(Owner) & Filters.command(["help"]))
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["help"]))
 async def help_command(client, message):
 	if message.chat.type != "private":
 		keyboard = InlineKeyboardMarkup([[InlineKeyboardButton(text="Bantuan", url=f"t.me/{setbot.get_me()['username']}?start=help")]])

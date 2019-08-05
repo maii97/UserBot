@@ -111,7 +111,8 @@ async def get_self():
 	else:
 		OwnerName = getself.first_name
 	OwnerUsername = getself.username
-	AdminSettings.append(Owner)
+	if Owner not in AdminSettings:
+		AdminSettings.append(Owner)
 
 async def get_bot():
 	global BotID, BotName, BotUsername
