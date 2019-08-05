@@ -5,23 +5,10 @@ from pyrogram import Filters
 
 __MODULE__ = "Device"
 __HELP__ = """
-Google Drive stuff, for login just type /gdrive in Assistant bot
+Check device codename
 
-──「 **Download From Drive URL** 」──
--> `gdrive download`
-Give url as args to download it.
-
-──「 **Upload From local to Google Drive** 」──
--> `gdrive upload`
-Upload from local storage to gdrive
-
-──「 **Mirror and save to GDrive file** 」──
--> `gdrive mirror`
-This can mirror from file download was limited, but not for deleted file
-
-──「 **Mirror from telegram to GDrive** 」──
--> `gdrive tgmirror`
-Download file from telegram, and mirror it to Google Drive
+──「 **Device** 」──
+-> `device (codename)`
 """
 
 
