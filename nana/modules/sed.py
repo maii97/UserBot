@@ -12,12 +12,17 @@ Need help?
 Learn regex here: regexone.com
 
 ──「 **Regex** 」──
--> `s <regex>`
-Yes, just do `s test/text`.
+-> `s/<regex>`
+Yes, just do `s/test/text`.
+
 Example: "This is test"
-Reply: s test/text
+Reply: s/test/text
 Result: "This is text"
+
 Flags: i (ignore), g (global)
+Flag text: `test things test`
+Flag ex: s/test/text/g
+Flag result: `text things text`
 """
 
 DELIMITERS = ("/", ":", "|", "_")
@@ -68,9 +73,9 @@ async def separate_sed(sed_string):
 		return replace, replace_with, flags.lower()
 
 
-@app.on_message(Filters.user("self") & Filters.command(["s"], Command))
+@app.on_message(Filters.user("self") & Filters.regex("^s/(.*?)"))
 async def sed_msg(client, message):
-	sed_result = await separate_sed("s/s/" + message.text[3:])
+	sed_result = await separate_sed("s/" + message.text)
 	if sed_result:
 		if message.reply_to_message:
 			to_fix = message.reply_to_message.text
@@ -102,5 +107,5 @@ async def sed_msg(client, message):
 			await message.edit("SRE constant error. You can learn regex in [here](https://regexone.com)", disable_web_page_preview=True)
 			return
 		if text:
-			await client.edit_message_text(message.chat.id, message_id=message.message_id, text="Hi {} 🙂\n\nMaybe you mean :-\n```{}```".format(message.reply_to_message.from_user.first_name, text))
+			await client.edit_message_text(message.chat.id, message_id=message.message_id, text="Did you you mean:\n```{}```".format(text))
 
