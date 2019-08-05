@@ -115,7 +115,7 @@ async def youtube_music(client, message):
 		text += "👤 **Author:** `{}`\n".format(video.author)
 		text += "🕦 **Duration:** `{}`\n".format(video.duration)
 		origtitle = re.sub(r'[\\/*?:"<>|\[\]]', "", str(music.title + "." + music._extension))
-		musictitle = re.sub(r'[ ]', '_', re.sub(r'[\\/*?:"<>|\[\]]', "", str(music.title)))
+		musictitle = re.sub(r'[\\/*?:"<>|\[\]]', "", str(music.title))
 		musicdate = video._ydl_info['upload_date'][:4]
 		titletext = "**Downloading music...**\n"
 		await message.edit(titletext+text, disable_web_page_preview=False)
