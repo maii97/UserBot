@@ -115,7 +115,7 @@ async def youtube_music(client, message):
 		text += "👤 **Author:** `{}`\n".format(video.author)
 		text += "🕦 **Duration:** `{}`\n".format(video.duration)
 		origtitle = re.sub(r'[\\/*?:"<>|\[\]]', "", str(music.title + "." + music._extension))
-		musictitle = re.sub(r'[\\/*?:"<>|\[\]]', "", str(music.title))
+		musictitle = re.sub(r'[ ]', '_', re.sub(r'[\\/*?:"<>|\[\]]', "", str(music.title)))
 		musicdate = video._ydl_info['upload_date'][:4]
 		titletext = "**Downloading music...**\n"
 		await message.edit(titletext+text, disable_web_page_preview=False)
@@ -139,7 +139,10 @@ async def youtube_music(client, message):
 		except FileNotFoundError:
 			pass
 		# music.download(filepath="nana/downloads/{}".format(origtitle))
-		download = await download_url(music.url, origtitle)
+		if "manifest.googlevideo.com" in music.url:
+			download = await download_url(music._info['fragment_base_url'], origtitle)
+		else:
+			download = await download_url(music.url, origtitle)
 		if download == "Failed to download file\nInvaild file name!":
 			return await message.edit(download)
 		titletext = "**Converting music...**\n"
@@ -165,7 +168,10 @@ async def youtube_music(client, message):
 		with open("nana/cache/prev.jpg", "wb") as stk:
 			shutil.copyfileobj(getprev.raw, stk)
 		await app.send_audio(message.chat.id, audio="nana/downloads/{}.mp3".format(musictitle), thumb="nana/cache/prev.jpg", title=music.title, caption="🕦 `{}`".format(video.duration), reply_to_message_id=message.message_id)
-		os.remove("nana/cache/prev.jpg")
+		try:
+			os.remove("nana/cache/prev.jpg")
+		except FileNotFoundError:
+			pass
 		try:
 			os.remove("nana/cache/thumb.jpg")
 		except FileNotFoundError:
