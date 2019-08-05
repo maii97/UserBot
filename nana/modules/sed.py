@@ -12,8 +12,8 @@ Need help?
 Learn regex here: regexone.com
 
 ──「 **Regex** 」──
--> `s/<regex>`
-Yes, just do `s/test/text`.
+-> `s/(regex)`
+Yes, just reply a msg and do `s/test/text`.
 
 Example: "This is test"
 Reply: s/test/text

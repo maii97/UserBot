@@ -17,7 +17,7 @@ This module can help you for generate memes and style text, just take a look and
 Please note this can cause spams on group!
 
 ──「 **Spongebob Mocking** 」──
--> `mock <*text>`
+-> `mock (*text)`
 Reply someone message, and mock his/her text! This will generate spongebob mocking sticker, for text use `mocktxt` instead.
 
 ──「 **Emoji insertion** 」──

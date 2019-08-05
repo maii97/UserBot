@@ -11,7 +11,7 @@ Translate some text by give a text or reply that text/caption.
 Translate by Google Translate
 
 ──「 **Translate** 」──
--> `tr <lang> <*text>`
+-> `tr (lang) (*text)`
 Give a target language and text as args for translate to that target.
 Reply a message to translate that.
 

@@ -11,7 +11,7 @@ Convert text to voice chat.
 Currently avaiable for english only.
 
 ──「 **Voice** 」──
--> `voice <text>`
+-> `voice (text)`
 Convert text to voice by google tts
 """
 

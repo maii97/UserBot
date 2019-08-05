@@ -8,13 +8,14 @@ __HELP__ = """
 Take a picture of website. You can select one for use this.
 
 ──「 **Take ss website** 」──
--> `print <url>`
+-> `print (url)`
 Send web screenshot, not full webpage. Send as picture
 
 ──「 **Take ss website (more)** 」──
--> `ss <url>`
--> args: `full` (args are optional)
+-> `ss (url) (*full)`
 Take screenshot of that website, if `full` args given, take full of website and send image as document
+
+* = optional
 """
 
 @app.on_message(Filters.user("self") & Filters.command(["print"], Command))

@@ -11,7 +11,7 @@ __HELP__ = """
 Download any file from URL or from telegram
 
 ──「 **Download From URL** 」──
--> `dl <url>`
+-> `dl (url)`
 Give url as args to download it.
 
 ──「 **Download From Telegram** 」──

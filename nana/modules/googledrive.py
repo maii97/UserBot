@@ -15,11 +15,11 @@ __HELP__ = """
 Google Drive stuff, for login just type /gdrive in Assistant bot
 
 ──「 **Download From Drive URL** 」──
--> `gdrive download`
+-> `gdrive download (url)`
 Give url as args to download it.
 
 ──「 **Upload From local to Google Drive** 」──
--> `gdrive upload`
+-> `gdrive upload (file)`
 Upload from local storage to gdrive
 
 ──「 **Mirror and save to GDrive file** 」──
