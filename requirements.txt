@@ -12,3 +12,4 @@ gitpython
 pafy
 youtube_dl
 urbandict
+googletrans
