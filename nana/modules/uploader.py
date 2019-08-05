@@ -11,11 +11,11 @@ __HELP__ = """
 Reupload URL image to telegram without save it first.
 
 ──「 **Upload image** 」──
--> `pic`
+-> `pic <url>`
 Upload image from URL
 
 ──「 **Upload sticker** 」──
--> `stk`
+-> `stk <url>`
 Upload image and convert to sticker, please note image from telegraph will result bug (telegram bugs)
 """
 

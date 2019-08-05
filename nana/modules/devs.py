@@ -18,15 +18,15 @@ __HELP__ = """
 This command means for helping development
 
 ──「 **Execution** 」──
--> `exec`
+-> `exec <command>`
 Execute a python commands.
 
 ──「 **Evaluation** 」──
--> `eval`
+-> `eval <command>`
 Do math evaluation.
 
 ──「 **Command shell** 」──
--> `cmd`
+-> `cmd <command>`
 Execute command shell
 
 ──「 **Take log** 」──

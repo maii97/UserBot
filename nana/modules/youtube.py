@@ -26,17 +26,17 @@ Search, download, convert music from youtube!
 Enjoy~
 
 ──「 **Search video** 」──
--> `youtube`
--> `yt`
+-> `youtube <text>`
+-> `yt <text>`
 Give text as args for search from youtube, will send result more than 10 depending on yt page.
 
 ──「 **Download video** 」──
--> `ytdl`
+-> `ytdl <url>`
 Download youtube video (mp4), you can select resolutions from the list.
 
 ──「 **Convert to music** 」──
--> `ytmusic`
--> `ytaudio`
+-> `ytmusic <url>`
+-> `ytaudio <url>`
 Download youtube music, and then send to tg as music.
 """
 

@@ -12,7 +12,7 @@ Need help?
 Learn regex here: regexone.com
 
 ──「 **Regex** 」──
--> `s`
+-> `s <regex>`
 Yes, just do `s test/text`.
 Example: "This is test"
 Reply: s test/text

@@ -8,7 +8,7 @@ __HELP__ = """
 Search for urban dictionary
 
 ──「 **Urban Dictionary** 」──
--> `ud`
+-> `ud <text>`
 Search urban for dictionary
 """
 
