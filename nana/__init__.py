@@ -4,7 +4,7 @@ import sys
 import re
 import requests
 
-from pyrogram import Client
+from pyrogram import Client, errors
 from pydrive.auth import GoogleAuth
 
 # Postgresql
@@ -48,7 +48,14 @@ api_id = Config.api_id
 api_hash = Config.api_hash
 
 # Required for some features
-Owner = Config.Owner
+# Set temp var for load later
+Owner = 0
+OwnerName = ""
+OwnerUsername = ""
+BotID = 0
+BotName = ""
+BotUsername = ""
+# From config
 Command = Config.Command
 NANA_WORKER = Config.NANA_WORKER
 ASSISTANT_WORKER = Config.ASSISTANT_WORKER
@@ -71,6 +78,7 @@ AdminSettings = Config.AdminSettings
 gauth = GoogleAuth()
 
 DB_AVAIABLE = False
+BOTINLINE_AVAIABLE = False
 
 # Postgresql
 def mulaisql() -> scoped_session:
@@ -85,6 +93,31 @@ def mulaisql() -> scoped_session:
 	DB_AVAIABLE = True
 	return scoped_session(sessionmaker(bind=engine, autoflush=False))
 
+async def get_bot_inline(bot):
+	global BOTINLINE_AVAIABLE
+	if setbot:
+		try:
+			await app.get_inline_bot_results("@{}".format(bot.username), "test")
+			BOTINLINE_AVAIABLE = True
+		except errors.exceptions.bad_request_400.BotInlineDisabled:
+			BOTINLINE_AVAIABLE = False
+
+async def get_self():
+	global Owner, OwnerName, OwnerUsername
+	getself = await app.get_me()
+	Owner = getself.id
+	if getself.last_name:
+		OwnerName = getself.first_name + " " + getself.last_name
+	else:
+		OwnerName = getself.first_name
+	OwnerUsername = getself.username
+
+async def get_bot():
+	global BotID, BotName, BotUsername
+	getbot = await setbot.get_me()
+	BotID = getbot.id
+	BotName = getbot.first_name
+	BotUsername = getbot.username
 
 BASE = declarative_base()
 SESSION = mulaisql()

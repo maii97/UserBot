@@ -9,7 +9,7 @@ import asyncio
 
 import pyrogram
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
-from nana import app, Owner, log, Command, ASSISTANT_BOT, setbot, USERBOT_VERSION, ASSISTANT_VERSION
+from nana import app, Owner, log, Command, ASSISTANT_BOT, setbot, USERBOT_VERSION, ASSISTANT_VERSION, get_self, get_bot
 
 from nana.modules import ALL_MODULES
 from nana.assistant import ALL_SETTINGS
@@ -77,10 +77,12 @@ async def start_bot():
 	# sys.excepthook = except_hook
 	# Assistant bot
 	await setbot.start()
+	await get_bot()
 	for setting in ALL_SETTINGS:
 		imported_module = importlib.import_module("nana.assistant." + setting)
 	# Nana userbot
 	await app.start()
+	await get_self()
 	for modul in ALL_MODULES:
 		imported_module = importlib.import_module("nana.modules." + modul)
 		if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:

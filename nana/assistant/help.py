@@ -2,13 +2,13 @@ import re
 import pyrogram
 
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQueryHandler
-from nana import setbot, Owner, log, Command
+from nana import setbot, Owner, log, Command, BotName
 from __main__ import HELP_COMMANDS
 from nana.helpers.misc import paginate_modules
 
 
 HELP_STRINGS = f"""
-Hello! I am your Assistant!
+Hello! I am {BotName}, your Assistant!
 I can help you for many things.
 
 **Main** commands available::
