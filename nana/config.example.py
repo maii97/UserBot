@@ -19,9 +19,7 @@ class Config(object):
 	ASSISTANT_BOT_TOKEN = ""
 
 	# Required for some features
-	# Owner and AdminSettings is for your Assistant bot only
-	Owner = 388576209 # Insert your Telegram ID (go @EmiliaHikariBot, type /id)
-	AdminSettings = [388576209] # Do like above, can insert multiple other user id, example [12345, 23456]
+	AdminSettings = [] # Insert int id, Add someone so they can access your assistant, leave it blank if you dont want!
 	Command = ["!", "."] # Insert command prefix, if you insert "!" then you can do !ping
 	# WORKER must be int (number)
 	NANA_WORKER = 8

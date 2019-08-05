@@ -103,7 +103,7 @@ async def get_bot_inline(bot):
 			BOTINLINE_AVAIABLE = False
 
 async def get_self():
-	global Owner, OwnerName, OwnerUsername
+	global Owner, OwnerName, OwnerUsername, AdminSettings
 	getself = await app.get_me()
 	Owner = getself.id
 	if getself.last_name:
@@ -111,6 +111,7 @@ async def get_self():
 	else:
 		OwnerName = getself.first_name
 	OwnerUsername = getself.username
+	AdminSettings.append(Owner)
 
 async def get_bot():
 	global BotID, BotName, BotUsername
