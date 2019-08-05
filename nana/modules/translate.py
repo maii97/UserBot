@@ -5,7 +5,7 @@ from pyrogram import Filters
 
 trl = Translator()
 
-__MODULE__ = "Purges"
+__MODULE__ = "Translate"
 __HELP__ = """
 Translate some text by give a text or reply that text/caption.
 Translate by Google Translate
