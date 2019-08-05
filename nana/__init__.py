@@ -30,7 +30,7 @@ except ModuleNotFoundError:
 	log.error("You need to place config.py in nana dir!")
 	quit(1)
 
-USERBOT_VERSION = "0.2"
+USERBOT_VERSION = "0.3"
 ASSISTANT_VERSION = "0.2"
 
 OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
