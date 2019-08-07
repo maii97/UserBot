@@ -50,9 +50,9 @@ async def afk_mentioned(client, message):
 	get = get_afk()
 	if get and get['afk']:
 		if get['reason']:
-			await message.reply("{} is AFK!".format(mention_markdown(Owner, OwnerName)))
-		else:
 			await message.reply("{} is AFK!\nBecause: {}".format(mention_markdown(Owner, OwnerName), message.text.split(None, 1)[1]))
+		else:
+			await message.reply("{} is AFK!".format(mention_markdown(Owner, OwnerName)))
 		if "-" in str(message.chat.id):
 			cid = str(message.chat.id)[4:]
 		else:
