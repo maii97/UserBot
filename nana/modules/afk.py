@@ -31,7 +31,7 @@ To exit from afk status, send anything to anywhere, exclude PM and saved message
 # Set priority to 11 and 12
 MENTIONED = []
 
-@app.on_message(Filters.user("self") & Filters.command(["afk"], Command))
+@app.on_message(Filters.user("self") & (Filters.command(["afk"], Command) | Filters.regex("^brb ")))
 async def afk(client, message):
 	if len(message.text.split()) >= 2:
 		set_afk(True, message.text.split(None, 1)[1])
@@ -44,7 +44,7 @@ async def afk(client, message):
 	await message.stop_propagation()
 
 
-@app.on_message(Filters.mentioned, group=11)
+@app.on_message(Filters.mentioned & ~Filters.bot, group=11)
 async def afk_mentioned(client, message):
 	global MENTIONED
 	get = get_afk()
