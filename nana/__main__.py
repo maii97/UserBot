@@ -15,14 +15,14 @@ from nana.modules import ALL_MODULES
 from nana.assistant import ALL_SETTINGS
 
 
-RUNTIME = 0
+BOT_RUNTIME = 0
 HELP_COMMANDS = {}
 
 
 loop = asyncio.get_event_loop()
 
 async def get_runtime():
-	return RUNTIME
+	return BOT_RUNTIME
 
 async def reload_userbot():
 	await app.start()
@@ -30,12 +30,18 @@ async def reload_userbot():
 		imported_module = importlib.import_module("nana.modules." + modul)
 		importlib.reload(imported_module)
 
+async def reinitial_restart():
+	await get_bot()
+	await get_self()
+
 async def reboot():
-	global RUNTIME, HELP_COMMANDS
+	global BOT_RUNTIME, HELP_COMMANDS
 	# await setbot.send_message(Owner, "Bot is restarting...")
 	await setbot.restart()
+	await app.restart()
+	await reinitial_restart()
 	# Reset global var
-	RUNTIME = 0
+	BOT_RUNTIME = 0
 	HELP_COMMANDS = {}
 	# Assistant bot
 	for setting in ALL_SETTINGS:
@@ -54,7 +60,7 @@ async def reboot():
 		if hasattr(imported_module, "__HELP__") and imported_module.__HELP__:
 			HELP_COMMANDS[imported_module.__MODULE__.lower()] = imported_module
 		importlib.reload(imported_module)
-	await setbot.send_message(Owner, "Restart successfully!")
+	# await setbot.send_message(Owner, "Restart successfully!")
 
 async def restart_all():
 	# Restarting and load all plugins
@@ -111,5 +117,5 @@ async def start_bot():
 	await setbot.idle()
 
 if __name__ == '__main__':
-	RUNTIME = int(time.time())
+	BOT_RUNTIME = int(time.time())
 	loop.run_until_complete(start_bot())
