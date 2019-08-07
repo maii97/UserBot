@@ -50,9 +50,9 @@ async def afk_mentioned(client, message):
 	get = get_afk()
 	if get and get['afk']:
 		if get['reason']:
-			message.reply("{} is AFK!".format(mention_markdown(Owner, OwnerName)))
+			await message.reply("{} is AFK!".format(mention_markdown(Owner, OwnerName)))
 		else:
-			message.reply("{} is AFK!\nBecause: {}".format(mention_markdown(Owner, OwnerName), message.text.split(None, 1)[1]))
+			await message.reply("{} is AFK!\nBecause: {}".format(mention_markdown(Owner, OwnerName), message.text.split(None, 1)[1]))
 		if "-" in str(message.chat.id):
 			cid = str(message.chat.id)[4:]
 		else:
@@ -74,14 +74,16 @@ async def afk_mentioned(client, message):
 @app.on_message(Filters.user("self") & Filters.group, group=12)
 async def no_longer_afk(client, message):
 	global MENTIONED
-	await setbot.send_message(message.from_user.id, "You are no longer afk!")
-	set_afk(False, "")
-	text = "**Total {} mentioned you**\n".format(len(MENTIONED))
-	for x in MENTIONED:
-		msg_text = x["text"]
-		if len(msg_text) >= 11:
-			msg_text = "{}...".format(x["text"])
-		text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(escape_markdown(x["user"]), x["chat_id"], x["message_id"], x["chat"], msg_text)
-	await setbot.send_message(message.from_user.id, text)
-	MENTIONED = []
+	get = get_afk()
+	if get and get['afk']:
+		await setbot.send_message(message.from_user.id, "You are no longer afk!")
+		set_afk(False, "")
+		text = "**Total {} mentioned you**\n".format(len(MENTIONED))
+		for x in MENTIONED:
+			msg_text = x["text"]
+			if len(msg_text) >= 11:
+				msg_text = "{}...".format(x["text"])
+			text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(escape_markdown(x["user"]), x["chat_id"], x["message_id"], x["chat"], msg_text)
+		await setbot.send_message(message.from_user.id, text)
+		MENTIONED = []
 
