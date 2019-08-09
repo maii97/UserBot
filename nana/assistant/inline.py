@@ -4,7 +4,7 @@ from uuid import uuid4
 from nana import app, setbot, Owner, OwnerName
 from nana.helpers.string import parse_button, build_keyboard
 
-from pyrogram import errors, Filters, InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent
+from pyrogram import errors, Filters, InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 from nana.modules.database import notes_db
 
 # TODO: Add more inline query

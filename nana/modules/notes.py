@@ -34,7 +34,8 @@ async def save_note(client, message):
 		await message.edit("```" + message.text + '```\n\nError: You must give a name for this note!')
 		return
 
-	if not text:
+	teks, button = parse_button(text)
+	if not teks:
 		await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
 		return
 
