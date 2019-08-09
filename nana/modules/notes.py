@@ -11,6 +11,41 @@ from nana.modules.database import notes_db as db
 # TODO: Add buttons support in some types
 # TODO: Add group notes, but whats for? since only you can get notes
 
+__MODULE__ = "Notes"
+__HELP__ = """
+Save a note, get that, even you can delete that note.
+This note only avaiable for yourself only!
+Also notes support inline button powered by inline query assistant bot.
+
+──「 **Save Note** 」──
+-> `save (note)`
+Save a note, you can get or delete that later.
+
+──「 **Get Note** 」──
+-> `get (note)`
+Get that note, if avaiable.
+
+──「 **Delete Note** 」──
+-> `clear (note)`
+Delete that note, if avaiable.
+
+──「 **All Notes** 」──
+-> `saved`
+-> `notes`
+Get all your notes, if too much notes, please use this in your saved message instead!
+
+
+── **Note Format** ──
+-> **Button**
+`[Button Text](buttonurl:google.com)`
+-> **Bold**
+`**Bold**`
+-> Italic
+`__Italic__`
+-> **Code**
+````Code````
+"""
+
 GET_FORMAT = {
 	Types.TEXT.value: app.send_message,
 	Types.DOCUMENT.value: app.send_document,
@@ -34,10 +69,11 @@ async def save_note(client, message):
 		await message.edit("```" + message.text + '```\n\nError: You must give a name for this note!')
 		return
 
-	teks, button = parse_button(text)
-	if not teks:
-		await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
-		return
+	if data_type == Types.TEXT:
+		teks, button = parse_button(text)
+		if not teks:
+			await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
+			return
 
 	db.save_selfnote(message.from_user.id, note_name, text, data_type, content)
 	await message.edit('Saved note `{}`!'.format(note_name))
