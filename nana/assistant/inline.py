@@ -58,8 +58,6 @@ async def inline_query_handler(client, query):
 			log_errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
 			button = InlineKeyboardMarkup([[InlineKeyboardButton("🐞 Report bugs", callback_data="report_errors")]])
 			text = "An error has accured!\n\n```{}```\n".format("".join(log_errors))
-			if errtype == ModuleNotFoundError:
-					text += "\nHint: Try this in your terminal `pip install -r requirements.txt`"
 			await setbot.send_message(Owner, text, reply_markup=button)
 			return
 
