@@ -10,13 +10,19 @@ __HELP__ = """
 Calculator, converting, math, etc.
 
 ──「 **Evaluation** 」──
--> `eval (command)`
+-> `eval (math)`
 Example: `eval 1+1`
 Math can be used: `+, -, *, /`
 
-──「 **Money converting** 」──
--> `curr (command)`
+──「 **Money converter** 」──
+-> `curr (value) (from) (to)`
+Examlpe: `curr 100 USD IDR`
+Output: `USD 100 = IDR 1,409,500.40`
 
+──「 **Temperature converter** 」──
+-> `temp (value) (Type)`
+Examlpe: `temp 30 C`
+Output: `30°C = 86.0°F`
 """
 
 c = CurrencyConverter()
