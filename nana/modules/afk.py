@@ -1,4 +1,4 @@
-import os, requests, html
+import os, requests, html, time
 
 from bs4 import BeautifulSoup
 
@@ -30,13 +30,15 @@ To exit from afk status, send anything to anywhere, exclude PM and saved message
 
 # Set priority to 11 and 12
 MENTIONED = []
+AFK_RESTIRECT = {}
+DELAY_TIME = 60 # seconds
 
 @app.on_message(Filters.user("self") & (Filters.command(["afk"], Command) | Filters.regex("^brb ")))
 async def afk(client, message):
 	if len(message.text.split()) >= 2:
 		set_afk(True, message.text.split(None, 1)[1])
-		await message.edit("{} is now AFK!\nBecause: {}".format(mention_markdown(message.from_user.id, message.from_user.first_name), message.text.split(None, 1)[1]))
-		await setbot.send_message(Owner, "You are now AFK!\nBecause: {}".format(message.text.split(None, 1)[1]))
+		await message.edit("{} is now AFK!\nBecause of {}".format(mention_markdown(message.from_user.id, message.from_user.first_name), message.text.split(None, 1)[1]))
+		await setbot.send_message(Owner, "You are now AFK!\nBecause of {}".format(message.text.split(None, 1)[1]))
 	else:
 		set_afk(True, "")
 		await message.edit("{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
@@ -49,14 +51,19 @@ async def afk_mentioned(client, message):
 	global MENTIONED
 	get = get_afk()
 	if get and get['afk']:
-		if get['reason']:
-			await message.reply("{} is AFK!\nBecause: {}".format(mention_markdown(Owner, OwnerName), get['reason']))
-		else:
-			await message.reply("{} is AFK!".format(mention_markdown(Owner, OwnerName)))
 		if "-" in str(message.chat.id):
 			cid = str(message.chat.id)[4:]
 		else:
 			cid = str(message.chat.id)
+
+		if cid in list(AFK_RESTIRECT):
+			if int(AFK_RESTIRECT[cid]) >= int(time.time()):
+				return
+		AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
+		if get['reason']:
+			await message.reply("Sorry, {} is AFK!\nBecause of {}".format(mention_markdown(Owner, OwnerName), get['reason']))
+		else:
+			await message.reply("Sorry, {} is AFK!".format(mention_markdown(Owner, OwnerName)))
 
 		content, message_type = get_message_type(message)
 		if message_type == Types.TEXT:
