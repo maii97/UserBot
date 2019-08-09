@@ -154,6 +154,7 @@ async def start_stop_bot(client, query):
 
 @setbot.on_callback_query(dynamic_data_filter("report_errors"))
 async def report_some_errors(client, query):
+	app.join_chat("@AyraSupport")
 	text = "Hi @AyraHikari, i got an error for you.\nPlease take a look and fix it if possible.\n\nThank you ❤️"
 	err = query.message.text
 	open("nana/cache/errors.txt", "w").write(err)
