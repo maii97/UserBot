@@ -21,6 +21,18 @@ Math can be used: `+, -, *, /`
 
 c = CurrencyConverter()
 
+# For converting
+def convert_f(fahrenheit):
+    f = float(fahrenheit)
+    f = (f*9/5)+32
+    return(f)
+
+def convert_c(celsius):
+    c = float(celsius)
+    c = (c-32)*5/9
+    return(c)
+
+
 @app.on_message(Filters.user("self") & Filters.command(["eval"], Command))
 async def evaluation(client, message):
 	if len(message.text.split()) == 1:
@@ -62,5 +74,26 @@ async def evaluation(client, message):
 		conv = c.convert(int(value), curr1, curr2)
 		text = "{} {} = {} {}".format(curr1, value, curr2, f'{conv:,.2f}')
 		await message.edit(text)
+	except ValueError as err:
+		await message.edit(str(err))
+
+@app.on_message(Filters.user("self") & Filters.command(["temp"], Command))
+async def evaluation(client, message):
+	if len(message.text.split()) <= 2:
+		await message.edit("Usage: `temp 30 C` or `temp 60 F`")
+		return
+	temp1 = message.text.split(None, 2)[1]
+	temp2 = message.text.split(None, 2)[2]
+	try:
+		if temp2 == "F":
+			result = convert_c(temp1)
+			text = "`{}°F` = `{}°C`".format(temp1, result)
+			await message.edit(text)
+		elif temp2 == "C":
+			result = convert_f(temp1)
+			text = "`{}°C` = `{}°F`".format(temp1, result)
+			await message.edit(text)
+		else:
+			await message.edit("Unknown type {}".format(temp2))
 	except ValueError as err:
 		await message.edit(str(err))
