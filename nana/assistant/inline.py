@@ -54,8 +54,8 @@ async def inline_query_handler(client, query):
 				cache_time=5,
 			)
 		except errors.exceptions.bad_request_400.MessageEmpty:
-			sys.__excepthook__(errtype, value, tback)
-			log_errors = traceback.format_exception(etype=errtype, value=value, tb=tback)
+			exc_type, exc_obj, exc_tb = sys.exc_info()
+			log_errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
 			button = InlineKeyboardMarkup([[InlineKeyboardButton("🐞 Report bugs", callback_data="report_errors")]])
 			text = "An error has accured!\n\n```{}```\n".format("".join(log_errors))
 			if errtype == ModuleNotFoundError:

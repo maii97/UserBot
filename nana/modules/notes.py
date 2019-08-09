@@ -29,8 +29,13 @@ GET_FORMAT = {
 @app.on_message(Filters.user(Owner) & Filters.command(["save"], Command))
 async def save_note(client, message):
 	note_name, text, data_type, content = get_note_type(message)
+
 	if not note_name:
-		await message.edit('You must give a name for this note!')
+		await message.edit("```" + message.text + '```\n\nError: You must give a name for this note!')
+		return
+
+	if not text:
+		await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
 		return
 
 	db.save_selfnote(message.from_user.id, note_name, text, data_type, content)
