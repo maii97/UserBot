@@ -103,7 +103,7 @@ async def get_note(client, message):
 				reply_to_message_id=replyid
 			)
 		else:
-			await GET_FORMAT[getnotes['type']](message.from_user.id, getnotes['file'], caption=teks, reply_to_message_id=replyid)
+			await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks, reply_to_message_id=replyid)
 
 @app.on_message(Filters.user(Owner) & Filters.command(["notes", "saved"], Command))
 async def local_notes(client, message):
