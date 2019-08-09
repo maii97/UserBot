@@ -1,5 +1,5 @@
 requests
-https://github.com/AyraHikari/pyrogram/archive/asyncio.zip
+https://github.com/AyraHikari/pyrogram/archive/asyncio-dev.zip
 TgCrypto
 pydrive
 sqlalchemy
