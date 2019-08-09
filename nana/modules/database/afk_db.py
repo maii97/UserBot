@@ -18,7 +18,6 @@ class AFK(BASE):
 	def __repr__(self):
 		return "<AFK {}>".format(self.user_id)
 
-AFK.__table__.drop()
 AFK.__table__.create(checkfirst=True)
 
 MY_AFK = {}
