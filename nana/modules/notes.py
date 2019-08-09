@@ -76,7 +76,7 @@ async def get_note(client, message):
 					reply_to_message_id=replyid
 				)
 			except IndexError:
-				message.edit("An error has accured! Check your assistant for more information!")
+				await message.edit("An error has accured! Check your assistant for more information!")
 				return
 		else:
 			await message.edit(teks)

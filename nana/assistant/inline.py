@@ -4,7 +4,7 @@ from uuid import uuid4
 from nana import app, setbot, Owner, OwnerName
 from nana.helpers.string import parse_button, build_keyboard
 
-from pyrogram import Filters, InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent
+from pyrogram import errors, Filters, InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent
 from nana.modules.database import notes_db
 
 # TODO: Add more inline query
@@ -53,7 +53,7 @@ async def inline_query_handler(client, query):
 				results=answers,
 				cache_time=5,
 			)
-		except IndexError:
+		except errors.exceptions.bad_request_400.MessageEmpty:
 			sys.__excepthook__(errtype, value, tback)
 			errors = traceback.format_exception(etype=errtype, value=value, tb=tback)
 			button = InlineKeyboardMarkup([[InlineKeyboardButton("🐞 Report bugs", callback_data="report_errors")]])
