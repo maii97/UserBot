@@ -40,10 +40,10 @@ Get all your notes, if too much notes, please use this in your saved message ins
 `[Button Text](buttonurl:google.com)`
 -> **Bold**
 `**Bold**`
--> Italic
+-> __Italic__
 `__Italic__`
--> **Code**
-````Code````
+-> `Code`
+`Code` (grave accent)
 """
 
 GET_FORMAT = {
