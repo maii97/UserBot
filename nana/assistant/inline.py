@@ -1,3 +1,5 @@
+import sys
+import traceback
 from uuid import uuid4
 from nana import app, setbot, Owner, OwnerName
 from nana.helpers.string import parse_button, build_keyboard
@@ -46,10 +48,20 @@ async def inline_query_handler(client, query):
 						title="Note #{}".format(notetag),
 						input_message_content=InputTextMessageContent(note),
 						reply_markup=InlineKeyboardMarkup(button)))
-		await client.answer_inline_query(query.id,
-			results=answers,
-			cache_time=5,
-		)
+		try:
+			await client.answer_inline_query(query.id,
+				results=answers,
+				cache_time=5,
+			)
+		except IndexError:
+			sys.__excepthook__(errtype, value, tback)
+			errors = traceback.format_exception(etype=errtype, value=value, tb=tback)
+			button = InlineKeyboardMarkup([[InlineKeyboardButton("🐞 Report bugs", callback_data="report_errors")]])
+			text = "An error has accured!\n\n```{}```\n".format("".join(errors))
+			if errtype == ModuleNotFoundError:
+					text += "\nHint: Try this in your terminal `pip install -r requirements.txt`"
+			await setbot.send_message(Owner, text, reply_markup=button)
+			return
 
 	await client.answer_inline_query(query.id,
 		results=answers,

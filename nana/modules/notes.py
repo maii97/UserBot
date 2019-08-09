@@ -68,12 +68,16 @@ async def get_note(client, message):
 				await message.edit("Your bot inline isn't available!\nCheck your bot for more information!")
 				await setbot.send_message(Owner, "Hello, your notes is look like include button, but i can't do that because **inline mode** is not enabled.\n\n**To enable inline mode:**\n1. Go to @BotFather and type `/mybots`\n2. Select your bot, then click **Bot Settings**, click **Inline Mode**, then click **Turn on**.\nOther option is optional, you can edit inline placeholder as you like!\n\nAfter that, you can try again to get that note!")
 				return
-			await client.send_inline_bot_result(
-				message.chat.id,
-				inlineresult.query_id,
-				inlineresult.results[0].id,
-				reply_to_message_id=replyid
-			)
+			try:
+				await client.send_inline_bot_result(
+					message.chat.id,
+					inlineresult.query_id,
+					inlineresult.results[0].id,
+					reply_to_message_id=replyid
+				)
+			except IndexError:
+				message.edit("An error has accured! Check your assistant for more information!")
+				return
 		else:
 			await message.edit(teks)
 	elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
@@ -96,12 +100,16 @@ async def get_note(client, message):
 				await message.edit("Your bot inline isn't available!\nCheck your bot for more information!")
 				await setbot.send_message(Owner, "Hello, your notes is look like include button, but i can't do that because **inline mode** is not enabled.\n\n**To enable inline mode:**\n1. Go to @BotFather and type `/mybots`\n2. Select your bot, then click **Bot Settings**, click **Inline Mode**, then click **Turn on**.\nOther option is optional, you can edit inline placeholder as you like!\n\nAfter that, you can try again to get that note!")
 				return
-			await client.send_inline_bot_result(
-				message.chat.id,
-				inlineresult.query_id,
-				inlineresult.results[0].id,
-				reply_to_message_id=replyid
-			)
+			try:
+				await client.send_inline_bot_result(
+					message.chat.id,
+					inlineresult.query_id,
+					inlineresult.results[0].id,
+					reply_to_message_id=replyid
+				)
+			except IndexError:
+				message.edit("An error has accured! Check your assistant for more information!")
+				return
 		else:
 			await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks, reply_to_message_id=replyid)
 
