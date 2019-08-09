@@ -13,3 +13,4 @@ pafy
 youtube_dl
 urbandict
 googletrans
+currencyconverter
