@@ -69,10 +69,11 @@ async def save_note(client, message):
 		await message.edit("```" + message.text + '```\n\nError: You must give a name for this note!')
 		return
 
-	teks, button = parse_button(text)
-	if not teks:
-		await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
-		return
+	if data_type == Types.TEXT:
+		teks, button = parse_button(text)
+		if not teks:
+			await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
+			return
 
 	db.save_selfnote(message.from_user.id, note_name, text, data_type, content)
 	await message.edit('Saved note `{}`!'.format(note_name))
