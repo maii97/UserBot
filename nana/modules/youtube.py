@@ -20,6 +20,8 @@ from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana.helpers.parser import cleanhtml, escape_markdown
 from nana.modules.downloads import download_url
 
+from nana.helpers.deldog import deldog
+
 __MODULE__ = "YouTube"
 __HELP__ = """
 Search, download, convert music from youtube!
@@ -53,15 +55,16 @@ async def youtube_search(client, message):
 	yutub = "<b>Results of {}</b>\n".format(teks)
 	nomor = 0
 	for i in divs:
-		title = cleanhtml(str(i.find('h3', {'class' :"yt-lockup-title"}).a.span))
-		url = i.find('h3', {'class' :"yt-lockup-title"}).a['href']
+		title = i.find('h3', {'class' :"yt-lockup-title"}).a.get('title')
+		url = i.find('h3', {'class' :"yt-lockup-title"}).a.get('href')
 		vidtime = i.find("span", {"class": "video-time"})
 		if vidtime:
-			vidtime = str("(" + cleanhtml(str(vidtime)) + ")")
+			vidtime = str("(" + vidtime.text + ")")
 		else:
 			vidtime = ""
 		nomor += 1
 		yutub += '<b>{}.</b> <a href="{}">{}</a> {}\n'.format(nomor, "https://www.youtube.com" + url, title, vidtime)
+	print(deldog(yutub))
 	await message.edit(yutub, disable_web_page_preview=True, parse_mode="html")
 
 @app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
@@ -85,8 +88,9 @@ async def youtube_downloader(client, message):
 		return
 	yt = requests.get("https://api.unblockvideos.com/youtube_downloader?id={}&selector=mp4".format(ytid)).json()
 	thumb = "https://i1.ytimg.com/vi/{}/mqdefault.jpg".format(ytid)
-	title = cleanhtml(str(BeautifulSoup(requests.get('https://www.youtube.com/watch?v={}'.format(ytid)).content).find('span', {"class": "watch-title"})))
-	capt = "**{}**\nDownloads:".format(title)
+	title = BeautifulSoup(requests.get('https://www.youtube.com/watch?v={}'.format(ytid)).content, "html.parser")
+	title = title.find('meta', {"name": "twitter:title"}).get('content')
+	capt = "**{}**\n\nDownloads:".format(title)
 	for x in yt:
 		capt += "\n-> [{}]({})".format(x['format'], x['url'])
 	try:
