@@ -20,8 +20,6 @@ from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana.helpers.parser import cleanhtml, escape_markdown
 from nana.modules.downloads import download_url
 
-from nana.helpers.deldog import deldog
-
 __MODULE__ = "YouTube"
 __HELP__ = """
 Search, download, convert music from youtube!
@@ -64,7 +62,6 @@ async def youtube_search(client, message):
 			vidtime = ""
 		nomor += 1
 		yutub += '<b>{}.</b> <a href="{}">{}</a> {}\n'.format(nomor, "https://www.youtube.com" + url, title, vidtime)
-	print(deldog(yutub))
 	await message.edit(yutub, disable_web_page_preview=True, parse_mode="html")
 
 @app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
