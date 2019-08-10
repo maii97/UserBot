@@ -7,17 +7,12 @@ from pyrogram import Filters
 
 __MODULE__ = "Weather"
 __HELP__ = """
-Take a picture of website. You can select one for use this.
+Get current weather in your location
 
-──「 **Take ss website** 」──
--> `print (url)`
-Send web screenshot, not full webpage. Send as picture
-
-──「 **Take ss website (more)** 」──
--> `ss (url) (*full)`
-Take screenshot of that website, if `full` args given, take full of website and send image as document
-
-* = optional
+──「 **Weather** 」──
+-> `wttr (location)`
+Get current weather in your location.
+Powered by `wttr.in`
 """
 
 # TODO: Add more custom args?
