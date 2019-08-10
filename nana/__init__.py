@@ -74,6 +74,7 @@ DB_URL = Config.DB_URL
 ASSISTANT_BOT = Config.ASSISTANT_BOT
 ASSISTANT_BOT_TOKEN = Config.ASSISTANT_BOT_TOKEN
 AdminSettings = Config.AdminSettings
+REMINDER_UPDATE = Config.REMINDER_UPDATE
 
 gauth = GoogleAuth()
 
