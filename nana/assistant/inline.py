@@ -72,11 +72,12 @@ async def inline_query_handler(client, query):
 				answers.append(InlineQueryResultArticle(
 						id=uuid4(),
 						title="Note #{}".format(list(allnotes)[x]),
+						description=note,
 						input_message_content=InputTextMessageContent(note),
 						reply_markup=InlineKeyboardMarkup(button)))
 			await client.answer_inline_query(query.id,
 				results=answers,
-				switch_pm_text="Your self notes",
+				switch_pm_text="Yourself notes",
 				switch_pm_parameter="help_inline"
 			)
 			return
@@ -95,6 +96,7 @@ async def inline_query_handler(client, query):
 		answers.append(InlineQueryResultArticle(
 						id=uuid4(),
 						title="Note #{}".format(notetag),
+						description=note,
 						input_message_content=InputTextMessageContent(note),
 						reply_markup=InlineKeyboardMarkup(button)))
 		try:
