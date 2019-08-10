@@ -183,3 +183,7 @@ async def clear_note(client, message):
 		return
 
 	await message.edit("Deleted note `{}`!".format(note))
+
+@app.on_message(Filters.user(Owner) & Filters.command(["ntest"], Command))
+async def ntest(client, message):
+	print(db.get_all_selfnotes_inline(Owner))
