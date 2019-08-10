@@ -3,7 +3,7 @@ import os, requests
 from bs4 import BeautifulSoup
 from platform import python_version, uname
 
-from nana import app, setbot, Owner, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION
+from nana import app, setbot, Owner, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername
 from __main__ import reload_userbot, restart_all
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
 
@@ -12,6 +12,14 @@ from threading import Thread
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["start"]))
 async def start(client, message):
+	if len(message.text.split()) >= 2:
+		helparg = message.text.split()[1]
+		if helparg == "help_inline":
+			await message.reply(f"**Inline Guide**\nJust type `@{BotUsername} (command)` in text box, and wait for response.\n\n──「 **Get Note from Inline** 」──\n-> `#note`\nAnd wait for list of notes in inline, currently support Text and Button only.")
+			return
+		if helparg == "createown":
+			await message.reply("Want to create your own Userbot and Assistant?\n[Go here](https://github.com/AyraHikari/Nana-TgBot/wiki), read guide carefully.\nIf you want to ask, join our community @AyraSupport")
+			return
 	try:
 		me = await app.get_me()
 	except ConnectionError:
