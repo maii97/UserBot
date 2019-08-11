@@ -24,6 +24,8 @@ class Config(object):
 	# WORKER must be int (number)
 	NANA_WORKER = 8
 	ASSISTANT_WORKER = 2
+	# If True, send notification to user if Official branch has new update after running bot
+	REMINDER_UPDATE = True
 
 	# APIs token
 	thumbnail_API = "" # Register free here: https://thumbnail.ws/

@@ -21,7 +21,7 @@ Take screenshot of that website, if `full` args given, take full of website and 
 @app.on_message(Filters.user("self") & Filters.command(["print"], Command))
 async def ssweb(client, message):
 	if len(message.text.split()) == 1:
-		await message.edit(bantuan)
+		await message.edit("Usage: `print web.url`")
 		return
 	if not thumbnail_API:
 		await message.edit("You need to fill thumbnail_API to use this!")
@@ -50,7 +50,7 @@ async def ssweb(client, message):
 @app.on_message(Filters.user("self") & Filters.command(["ss"], Command))
 async def ssweb(client, message):
 	if len(message.text.split()) == 1:
-		await message.edit(bantuan)
+		await message.edit("Usage: `print web.url`")
 		return
 	if not screenshotlayer_API:
 		await message.edit("You need to fill screenshotlayer_API to use this!")

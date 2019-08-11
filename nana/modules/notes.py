@@ -40,10 +40,10 @@ Get all your notes, if too much notes, please use this in your saved message ins
 `[Button Text](buttonurl:google.com)`
 -> **Bold**
 `**Bold**`
--> Italic
+-> __Italic__
 `__Italic__`
--> **Code**
-````Code````
+-> `Code`
+`Code` (grave accent)
 """
 
 GET_FORMAT = {
@@ -183,3 +183,7 @@ async def clear_note(client, message):
 		return
 
 	await message.edit("Deleted note `{}`!".format(note))
+
+@app.on_message(Filters.user(Owner) & Filters.command(["ntest"], Command))
+async def ntest(client, message):
+	print(db.get_all_selfnotes_inline(Owner))

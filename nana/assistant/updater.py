@@ -1,7 +1,7 @@
 import os, time, html, random
 import asyncio
 
-from nana import app, setbot, Owner, AdminSettings, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, REPOSITORY, RANDOM_STICKERS
+from nana import app, setbot, Owner, AdminSettings, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE
 from __main__ import restart_all, loop
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
 
@@ -112,4 +112,5 @@ async def update_button(client, query):
 	await update_changelog(changelog)
 	await restart_all()
 
-loop.create_task(update_checker())
+if REMINDER_UPDATE:
+	loop.create_task(update_checker())

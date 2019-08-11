@@ -72,6 +72,18 @@ def get_all_selfnotes(user_id):
 	allnotes.sort()
 	return allnotes
 
+def get_all_selfnotes_inline(user_id):
+	if not SELF_NOTES.get(user_id):
+		SELF_NOTES[user_id] = {}
+		return None
+	# Sorting
+	allnotes = {}
+	sortnotes = list(SELF_NOTES[user_id])
+	sortnotes.sort()
+	for x in sortnotes:
+		allnotes[x] = SELF_NOTES[user_id][x]
+	return allnotes
+
 def rm_selfnote(user_id, note_name):
 	global SELF_NOTES
 	with INSERTION_LOCK:
