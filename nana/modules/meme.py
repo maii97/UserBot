@@ -235,19 +235,3 @@ async def meme_gen(client, message):
 			await client.send_sticker(message.chat.id, "nana/cache/meme.png", reply_to_message_id=message.message_id)
 		os.remove("nana/cache/meme.png")
 
-
-# Aeshetic
-async def vaporize(vape_me):
-	"""Solution shamelessly stolen from http://stackoverflow.com/a/8327034
-	by Ignacio Vazquez-Abrams"""
-	normal = u' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~'
-	wide = u'　０１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ！゛＃＄％＆（）＊＋、ー。／：；〈＝〉？＠［\\］＾＿‘｛｜｝～'
-	widemap = dict((ord(x[0]), x[1]) for x in zip(normal, wide))
-	vaped = vape_me.translate(widemap)
-	return vaped
-
-@app.on_message(Filters.user("self") & Filters.command(["aes"], Command))
-async def aeshetic(client, message):
-	teks = message.text.split(None, 1)[1]
-	reply = await vaporize(teks)
-	await message.edit(reply)

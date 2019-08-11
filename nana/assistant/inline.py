@@ -7,7 +7,7 @@ from nana.helpers.string import parse_button, build_keyboard
 from pyrogram import errors, Filters, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 from pyrogram import InlineQueryResultArticle
 from nana.helpers.msg_types import Types
-from nana.modules.stylish import text_style_generator, upside_down_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE
+from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext
 from nana.modules.database import notes_db
 
 # TODO: Add more inline query
@@ -47,6 +47,8 @@ async def inline_query_handler(client, query):
 		)
 		return
 
+
+	# Notes
 	if string.split()[0] == "#note":
 		if len(string.split()) == 1:
 			allnotes = notes_db.get_all_selfnotes_inline(query.from_user.id)
@@ -113,6 +115,8 @@ async def inline_query_handler(client, query):
 			await setbot.send_message(Owner, text, reply_markup=button)
 			return
 
+
+	# Stylish converter
 	elif string.split()[0] == "#stylish":
 		if len(string.split()) == 1:
 			await client.answer_inline_query(query.id,
@@ -122,36 +126,86 @@ async def inline_query_handler(client, query):
 			)
 			return
 		text = string.split(None, 1)[1]
-		upside = upside_down_inline(text)
+		upside = upsidedown_text_inline(text)
 		answers.append(InlineQueryResultArticle(
 						id=uuid4(),
-						title="Upside-down Text",
-						description=upside,
+						title=upside,
+						description="Upside-down Text",
 						input_message_content=InputTextMessageContent(upside)))
 		over = text_style_generator(text, CHAR_OVER)
 		answers.append(InlineQueryResultArticle(
 						id=uuid4(),
-						title="Overline Text",
-						description=over,
+						title=over,
+						description="Overline Text",
 						input_message_content=InputTextMessageContent(over)))
 		under = text_style_generator(text, CHAR_UNDER)
 		answers.append(InlineQueryResultArticle(
 						id=uuid4(),
-						title="Underline Text",
-						description=under,
+						title=under,
+						description="Underline Text",
 						input_message_content=InputTextMessageContent(under)))
 		strike = text_style_generator(text, CHAR_STRIKE)
 		answers.append(InlineQueryResultArticle(
 						id=uuid4(),
-						title="Strike Text",
-						description=strike,
+						title=strike,
+						description="Strike Text",
 						input_message_content=InputTextMessageContent(strike)))
+		points = text_style_generator(text, CHAR_POINTS)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=points,
+						description="Points Text",
+						input_message_content=InputTextMessageContent(points)))
+		smallcaps_conv = formatting_text_inline(text, smallcaps)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=smallcaps_conv,
+						description="Smallcaps Text",
+						input_message_content=InputTextMessageContent(smallcaps_conv)))
+		super_script = formatting_text_inline(text, superscript)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=super_script,
+						description="Superscript Text",
+						input_message_content=InputTextMessageContent(super_script)))
+		sub_script = formatting_text_inline(text, subscript)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=sub_script,
+						description="Subscript Text",
+						input_message_content=InputTextMessageContent(sub_script)))
+		wide_text = formatting_text_inline(text, wide)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=wide_text,
+						description="Wide Text",
+						input_message_content=InputTextMessageContent(wide_text)))
+		bubbles_text = formatting_text_inline(text, bubbles)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=bubbles_text,
+						description="Bubbles Text",
+						input_message_content=InputTextMessageContent(bubbles_text)))
+		bubblesblack_text = formatting_text_inline(text, bubblesblack)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=bubblesblack_text,
+						description="Bubbles Black Text",
+						input_message_content=InputTextMessageContent(bubblesblack_text)))
+		smoth_text = formatting_text_inline(text, smothtext)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title=smoth_text,
+						description="Smoth Text",
+						input_message_content=InputTextMessageContent(smoth_text)))
 		await client.answer_inline_query(query.id,
 				results=answers,
 				switch_pm_text="Converted to stylish text",
 				switch_pm_parameter="help_inline"
 			)
 		return
+
+
 
 	await client.answer_inline_query(query.id,
 		results=answers,
