@@ -7,6 +7,7 @@ from nana.helpers.string import parse_button, build_keyboard
 from pyrogram import errors, Filters, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 from pyrogram import InlineQueryResultArticle
 from nana.helpers.msg_types import Types
+from nana.modules.stylish import text_style_generator, upside_down_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE
 from nana.modules.database import notes_db
 
 # TODO: Add more inline query
@@ -111,6 +112,46 @@ async def inline_query_handler(client, query):
 			text = "An error has accured!\n\n```{}```\n".format("".join(log_errors))
 			await setbot.send_message(Owner, text, reply_markup=button)
 			return
+
+	elif string.split()[0] == "#stylish":
+		if len(string.split()) == 1:
+			await client.answer_inline_query(query.id,
+				results=answers,
+				switch_pm_text="Insert any text to convert it!",
+				switch_pm_parameter="help_inline"
+			)
+			return
+		text = string.split(None, 1)[1]
+		upside = upside_down_inline(text)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title="Upside-down Text",
+						description=upside,
+						input_message_content=InputTextMessageContent(upside)))
+		over = text_style_generator(text, CHAR_OVER)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title="Overline Text",
+						description=over,
+						input_message_content=InputTextMessageContent(over)))
+		under = text_style_generator(text, CHAR_UNDER)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title="Underline Text",
+						description=under,
+						input_message_content=InputTextMessageContent(under)))
+		strike = text_style_generator(text, CHAR_STRIKE)
+		answers.append(InlineQueryResultArticle(
+						id=uuid4(),
+						title="Strike Text",
+						description=strike,
+						input_message_content=InputTextMessageContent(strike)))
+		await client.answer_inline_query(query.id,
+				results=answers,
+				switch_pm_text="Converted to stylish text",
+				switch_pm_parameter="help_inline"
+			)
+		return
 
 	await client.answer_inline_query(query.id,
 		results=answers,

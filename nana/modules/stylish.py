@@ -54,17 +54,7 @@ def text_style_generator(text, text_type):
 		pesan += teks[x]
 	return pesan
 
-@app.on_message(Filters.user("self") & Filters.command(["stylish"], Command))
-async def stylish_generator(client, message):
-	if message.text and len(message.text.split()) == 1 or message.caption and len(message.caption.split()) == 1:
-		await message.edit("Usage: `stylish your text goes here`")
-		return
-	
-	if message.caption:
-		text = message.caption.split(None, 1)[1]
-	else:
-		text = message.text.split(None, 1)[1]
-
+def stylish_formatting(text):
 	# Converting to upside-down text: upside
 	upside_compile = re.compile(r'<upside>(.*?)</upside>')
 	src_code = upside_compile.findall(text)
@@ -87,7 +77,36 @@ async def stylish_generator(client, message):
 		compiled = text_style_generator(x, CHAR_UNDER)
 		text = re.sub(r'<unline>(.*?)</unline>', compiled, text, 1)
 
+	# Converting to strike: strike
+	overlined_compile = re.compile(r'<strike>(.*?)</strike>')
+	src_code = overlined_compile.findall(text)
+	for x in src_code:
+		compiled = text_style_generator(x, CHAR_STRIKE)
+		text = re.sub(r'<strike>(.*?)</strike>', compiled, text, 1)
+
+	return text
+
+@app.on_message(Filters.user("self") & Filters.command(["stylish"], Command))
+async def stylish_generator(client, message):
+	if message.text and len(message.text.split()) == 1 or message.caption and len(message.caption.split()) == 1:
+		await message.edit("Usage: `stylish your text goes here`")
+		return
+	
+	if message.caption:
+		text = message.caption.split(None, 1)[1]
+	else:
+		text = message.text.split(None, 1)[1]
+
+	text = stylish_formatting(text)
+
 	if message.caption:
 		await message.edit_caption(text)
 	else:
 		await message.edit(text)
+
+
+# For inline stuff
+def upside_down_inline(text):
+	line = text.strip("\r\n")
+	xline = ''.join([upsidedown_dict[c] if c in upsidedown_dict else c for c in line[::-1]])
+	return xline
