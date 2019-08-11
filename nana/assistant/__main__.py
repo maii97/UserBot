@@ -15,7 +15,19 @@ async def start(client, message):
 	if len(message.text.split()) >= 2:
 		helparg = message.text.split()[1]
 		if helparg == "help_inline":
-			await message.reply(f"**Inline Guide**\nJust type `@{BotUsername} (command)` in text box, and wait for response.\n\n──「 **Get Note from Inline** 」──\n-> `#note`\nAnd wait for list of notes in inline, currently support Text and Button only.")
+			await message.reply("""**Inline Guide**
+Just type `@{} (command)` in text box, and wait for response.
+
+──「 **Get Note from Inline** 」──
+-> `#note <*notetag>`
+And wait for list of notes in inline, currently support Text and Button only.
+
+──「 **Stylish Generator Inline** 」──
+-> `#stylish your text`
+Convert a text to various style, can be used anywhere!
+
+* = Can be used as optional
+""".format(BotUsername))
 			return
 		if helparg == "createown":
 			await message.reply("Want to create your own Userbot and Assistant?\n[Go here](https://github.com/AyraHikari/Nana-TgBot/wiki), read guide carefully.\nIf you want to ask, join our community @AyraSupport")
