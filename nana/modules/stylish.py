@@ -3,6 +3,7 @@ from html import escape
 
 from nana import app, Command, lang_code
 from pyrogram import Filters
+from html import escape
 
 __MODULE__ = "Stylish Text"
 __HELP__ = """
@@ -29,7 +30,7 @@ Stylish your text easily, can be used as caption and text.
 Example:
 Input = `stylish Your text here <upside>with</upside> <strike>formatted</strike> <unline>style</unline>`
 Output = `Your text here ɥʇ!ʍ f̶o̶r̶m̶a̶t̶t̶e̶d̶ s̲t̲y̲l̲e̲`
-"""
+""".replace("<", escape('<')).replace(">", escape('>'))
 
 upsidedown_dict = {
 	'a':'ɐ', 'b':'q', 'c':'ɔ', 'd':'p', 'e':'ə',
