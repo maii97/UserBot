@@ -51,6 +51,10 @@ if ENV:
 	api_id = os.environ.get('api_id', None)
 	api_hash = os.environ.get('api_hash', None)
 
+	# Session
+	USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
+	ASSISTANT_SESSION = os.environ.get('ASSISTANT_SESSION', None)
+
 	# Required for some features
 	# Set temp var for load later
 	Owner = 0
@@ -107,6 +111,10 @@ else:
 	api_id = Config.api_id
 	api_hash = Config.api_hash
 
+	# Session
+	USERBOT_SESSION = Config.USERBOT_SESSION
+	ASSISTANT_SESSION = Config.ASSISTANT_SESSION
+
 	# Required for some features
 	# Set temp var for load later
 	Owner = 0
@@ -146,6 +154,10 @@ else:
 	AdminSettings = Config.AdminSettings
 	REMINDER_UPDATE = Config.REMINDER_UPDATE
 	TEST_MODE = Config.TEST_MODE
+
+if USERBOT_SESSION and ASSISTANT_SESSION:
+	BOT_SESSION = ASSISTANT_SESSION
+	APP_SESSION = USERBOT_SESSION
 
 gauth = GoogleAuth()
 
