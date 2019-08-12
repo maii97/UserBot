@@ -9,7 +9,7 @@ import asyncio
 
 import pyrogram
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
-from nana import app, Owner, log, Command, ASSISTANT_BOT, setbot, USERBOT_VERSION, ASSISTANT_VERSION, get_self, get_bot
+from nana import app, Owner, log, Command, setbot, USERBOT_VERSION, ASSISTANT_VERSION, get_self, get_bot
 
 from nana.modules import ALL_MODULES
 from nana.assistant import ALL_SETTINGS

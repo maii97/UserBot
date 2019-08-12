@@ -37,6 +37,8 @@ REPOSITORY = "https://github.com/AyraHikari/Nana-TgBot"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI", "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 
 ENV = bool(os.environ.get('ENV', False))
+BOT_SESSION = "nana/session/ManageBot"
+APP_SESSION = "nana/session/Nana"
 
 if ENV:
 	# Version
@@ -58,7 +60,7 @@ if ENV:
 	BotName = ""
 	BotUsername = ""
 	# From config
-	Command = eval(os.environ.get('Command', '["!", ".", "-", "^"]'))
+	Command = os.environ.get("Command", "! . - ^").split()
 	NANA_WORKER = int(os.environ.get('NANA_WORKER', 8))
 	ASSISTANT_WORKER = int(os.environ.get('ASSISTANT_WORKER', 2))
 
@@ -71,23 +73,21 @@ if ENV:
 		else:
 			raise AttributeError
 	except AttributeError:
-		BOT_SESSION = "nana/session/ManageBot"
-		APP_SESSION = "nana/session/Nana"
+		pass
 
 	# APIs
 	thumbnail_API = os.environ.get('thumbnail_API', None)
 	screenshotlayer_API = os.environ.get('screenshotlayer_API', None)
 
 	# LOADER
-	USERBOT_LOAD = eval(os.environ.get('USERBOT_LOAD', "[]"))
-	USERBOT_NOLOAD = eval(os.environ.get('USERBOT_NOLOAD', "[]"))
-	ASSISTANT_LOAD = eval(os.environ.get('ASSISTANT_LOAD', "[]"))
-	ASSISTANT_NOLOAD = eval(os.environ.get('ASSISTANT_NOLOAD', "[]"))
+	USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
+	USERBOT_NOLOAD = os.environ.get("USERBOT_NOLOAD", "").split()
+	ASSISTANT_LOAD = os.environ.get("ASSISTANT_LOAD", "").split()
+	ASSISTANT_NOLOAD = os.environ.get("ASSISTANT_NOLOAD", "").split()
 
 	DB_URL = os.environ.get('DB_URL', None)
-	ASSISTANT_BOT = os.environ.get('ASSISTANT_BOT', False)
 	ASSISTANT_BOT_TOKEN = os.environ.get('ASSISTANT_BOT_TOKEN', None)
-	AdminSettings = eval(os.environ.get('AdminSettings', "[]"))
+	AdminSettings = list(int(x) for x in os.environ.get("AdminSettings", "").split())
 	REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
 	TEST_MODE = bool(os.environ.get('TEST_MODE', False))
 else:
@@ -129,8 +129,7 @@ else:
 		else:
 			raise AttributeError
 	except AttributeError:
-		BOT_SESSION = "nana/session/ManageBot"
-		APP_SESSION = "nana/session/Nana"
+		pass
 
 	# APIs
 	thumbnail_API = Config.thumbnail_API
@@ -143,7 +142,6 @@ else:
 	ASSISTANT_NOLOAD = Config.ASSISTANT_NOLOAD
 
 	DB_URL = Config.DB_URL
-	ASSISTANT_BOT = Config.ASSISTANT_BOT
 	ASSISTANT_BOT_TOKEN = Config.ASSISTANT_BOT_TOKEN
 	AdminSettings = Config.AdminSettings
 	REMINDER_UPDATE = Config.REMINDER_UPDATE
@@ -198,9 +196,6 @@ async def get_bot():
 BASE = declarative_base()
 SESSION = mulaisql()
 
-if ASSISTANT_BOT:
-	setbot = Client(BOT_SESSION, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER, test_mode=TEST_MODE)
-else:
-	setbot = None
+setbot = Client(BOT_SESSION, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER, test_mode=TEST_MODE)
 
 app = Client(APP_SESSION, api_id=api_id, api_hash=api_hash, app_version=app_version, device_model=device_model, system_version=system_version, lang_code=lang_code, workers=NANA_WORKER, test_mode=TEST_MODE)
