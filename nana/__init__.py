@@ -89,7 +89,7 @@ if ENV:
 	ASSISTANT_LOAD = os.environ.get("ASSISTANT_LOAD", "").split()
 	ASSISTANT_NOLOAD = os.environ.get("ASSISTANT_NOLOAD", "").split()
 
-	DB_URL = os.environ.get('DB_URL', None)
+	DB_URL = os.environ.get('DB_URL', "postgres://username:password@localhost:5432/database")
 	ASSISTANT_BOT_TOKEN = os.environ.get('ASSISTANT_BOT_TOKEN', None)
 	AdminSettings = list(int(x) for x in os.environ.get("AdminSettings", "").split())
 	REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
