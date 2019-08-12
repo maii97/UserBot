@@ -29,12 +29,6 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     log.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
     quit(1)
 
-try:
-	from nana.config import Development as Config
-except ModuleNotFoundError:
-	log.error("You need to place config.py in nana dir!")
-	quit(1)
-
 USERBOT_VERSION = "0.3.2"
 ASSISTANT_VERSION = "0.3.2"
 
@@ -97,6 +91,12 @@ if ENV:
 	REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
 	TEST_MODE = bool(os.environ.get('TEST_MODE', False))
 else:
+	try:
+		from nana.config import Development as Config
+	except ModuleNotFoundError:
+		log.error("You need to place config.py in nana dir!")
+		quit(1)
+
 	# Version
 	lang_code = Config.lang_code
 	device_model = Config.device_model
