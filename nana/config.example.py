@@ -38,6 +38,9 @@ class Config(object):
 	# manager bot
 	ASSISTANT_LOAD = []
 	ASSISTANT_NOLOAD = []
+
+	# Pass True if you want to use test mode
+	TEST_MODE = False
 	
 
 class Production(Config):
