@@ -4,10 +4,11 @@ from bs4 import BeautifulSoup
 
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import app, setbot, Owner, OwnerName, Command
+from nana import app, setbot, Owner, OwnerName, Command, DB_AVAIABLE
 from nana.helpers.parser import mention_markdown, escape_markdown
 from nana.helpers.msg_types import Types, get_message_type
-from nana.modules.database.afk_db import set_afk, get_afk
+if DB_AVAIABLE:
+	from nana.modules.database.afk_db import set_afk, get_afk
 
 
 __MODULE__ = "AFK"
@@ -35,6 +36,9 @@ DELAY_TIME = 60 # seconds
 
 @app.on_message(Filters.user("self") & (Filters.command(["afk"], Command) | Filters.regex("^brb ")))
 async def afk(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	if len(message.text.split()) >= 2:
 		set_afk(True, message.text.split(None, 1)[1])
 		await message.edit("{} is now AFK!\nBecause of {}".format(mention_markdown(message.from_user.id, message.from_user.first_name), message.text.split(None, 1)[1]))
@@ -48,6 +52,8 @@ async def afk(client, message):
 
 @app.on_message(Filters.mentioned & ~Filters.bot, group=11)
 async def afk_mentioned(client, message):
+	if not DB_AVAIABLE:
+		return
 	global MENTIONED
 	get = get_afk()
 	if get and get['afk']:
@@ -80,6 +86,8 @@ async def afk_mentioned(client, message):
 
 @app.on_message(Filters.user("self") & Filters.group, group=12)
 async def no_longer_afk(client, message):
+	if not DB_AVAIABLE:
+		return
 	global MENTIONED
 	get = get_afk()
 	if get and get['afk']:

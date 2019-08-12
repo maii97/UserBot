@@ -9,11 +9,15 @@ import asyncio
 
 import pyrogram
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
-from nana import app, Owner, log, Command, ASSISTANT_BOT, setbot, USERBOT_VERSION, ASSISTANT_VERSION, get_self, get_bot
+from nana import app, Owner, log, Command, setbot, USERBOT_VERSION, ASSISTANT_VERSION, get_self, get_bot
 
 from nana.modules import ALL_MODULES
 from nana.assistant import ALL_SETTINGS
 
+try:
+	from nana import TEST_DEVELOP
+except ImportError:
+	TEST_DEVELOP = False
 
 BOT_RUNTIME = 0
 HELP_COMMANDS = {}
@@ -83,12 +87,12 @@ async def except_hook(errtype, value, tback):
 	await setbot.send_message(Owner, text, reply_markup=button)
 
 async def reinitial():
-	await setbot.start()
 	await app.start()
-	await get_bot()
+	await setbot.start()
 	await get_self()
-	await setbot.stop()
+	await get_bot()
 	await app.stop()
+	await setbot.stop()
 
 async def start_bot():
 	# sys.excepthook = except_hook
@@ -118,7 +122,10 @@ async def start_bot():
 	log.info("Assistant modules: " + str(ALL_SETTINGS))
 	log.info("-----------------------")
 	log.info("Bot run successfully!")
-	await setbot.idle()
+	if TEST_DEVELOP:
+		log.warning("Test is passed!")
+	else:
+		await setbot.idle()
 
 if __name__ == '__main__':
 	BOT_RUNTIME = int(time.time())

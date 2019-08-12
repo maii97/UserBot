@@ -1,13 +1,14 @@
 import sys
 import traceback
-from nana import app, setbot, Owner, OwnerName
+from nana import app, setbot, Owner, OwnerName, DB_AVAIABLE
 from nana.helpers.string import parse_button, build_keyboard
 
 from pyrogram import errors, Filters, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 from pyrogram import InlineQueryResultArticle
 from nana.helpers.msg_types import Types
 from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext
-from nana.modules.database import notes_db
+if DB_AVAIABLE:
+	from nana.modules.database import notes_db
 
 # TODO: Add more inline query
 # TODO: Wait for pyro update to add more inline query
@@ -49,6 +50,13 @@ async def inline_query_handler(client, query):
 
 	# Notes
 	if string.split()[0] == "#note":
+		if not DB_AVAIABLE:
+			await client.answer_inline_query(query.id,
+					results=answers,
+					switch_pm_text="Your database isn't avaiable!",
+					switch_pm_parameter="help_inline"
+				)
+			return
 		if len(string.split()) == 1:
 			allnotes = notes_db.get_all_selfnotes_inline(query.from_user.id)
 			if not allnotes:

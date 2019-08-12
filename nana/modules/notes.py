@@ -2,11 +2,12 @@ import time
 
 from pyrogram import Filters, errors, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import app, setbot, Command, Owner, BotUsername
+from nana import app, setbot, Command, Owner, BotUsername, DB_AVAIABLE
 from nana.helpers.string import parse_button, build_keyboard
 from nana.helpers.msg_types import Types, get_note_type
 
-from nana.modules.database import notes_db as db
+if DB_AVAIABLE:
+	from nana.modules.database import notes_db as db
 
 # TODO: Add buttons support in some types
 # TODO: Add group notes, but whats for? since only you can get notes
@@ -63,6 +64,9 @@ GET_FORMAT = {
 
 @app.on_message(Filters.user(Owner) & Filters.command(["save"], Command))
 async def save_note(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	note_name, text, data_type, content = get_note_type(message)
 
 	if not note_name:
@@ -81,6 +85,9 @@ async def save_note(client, message):
 
 @app.on_message(Filters.user(Owner) & Filters.command(["get"], Command))
 async def get_note(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	is_hash = False
 	if len(message.text.split()) >= 2:
 		note = message.text.split()[1]
@@ -157,6 +164,9 @@ async def get_note(client, message):
 
 @app.on_message(Filters.user(Owner) & Filters.command(["notes", "saved"], Command))
 async def local_notes(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	getnotes = db.get_all_selfnotes(message.from_user.id)
 	if not getnotes:
 		await message.edit("There are no notes in local notes!")
@@ -172,6 +182,9 @@ async def local_notes(client, message):
 
 @app.on_message(Filters.user(Owner) & Filters.command(["clear"], Command))
 async def clear_note(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	if len(message.text.split()) <= 1:
 		await message.edit("What do you want to clear?")
 		return
@@ -183,7 +196,3 @@ async def clear_note(client, message):
 		return
 
 	await message.edit("Deleted note `{}`!".format(note))
-
-@app.on_message(Filters.user(Owner) & Filters.command(["ntest"], Command))
-async def ntest(client, message):
-	print(db.get_all_selfnotes_inline(Owner))

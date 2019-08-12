@@ -4,11 +4,15 @@ from nana import app, setbot, Owner, AdminSettings, DB_AVAIABLE, USERBOT_VERSION
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
 from __main__ import get_runtime
 from nana.modules.chats import get_msgc
-from nana.modules.database.chats_db import get_all_chats
+if DB_AVAIABLE:
+	from nana.modules.database.chats_db import get_all_chats
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
 async def stats(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	try:
 		me = await app.get_me()
 	except ConnectionError:
