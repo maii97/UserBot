@@ -36,6 +36,10 @@ async def reinitial_restart():
 
 async def reboot():
 	global BOT_RUNTIME, HELP_COMMANDS
+	importlib.reload(importlib.import_module("nana.modules"))
+	importlib.reload(importlib.import_module("nana.assistant"))
+	from nana.modules import ALL_MODULES
+	from nana.assistant import ALL_SETTINGS
 	# await setbot.send_message(Owner, "Bot is restarting...")
 	await setbot.restart()
 	await app.restart()
@@ -79,12 +83,12 @@ async def except_hook(errtype, value, tback):
 	await setbot.send_message(Owner, text, reply_markup=button)
 
 async def reinitial():
-	await app.start()
 	await setbot.start()
-	await get_self()
+	await app.start()
 	await get_bot()
-	await app.stop()
+	await get_self()
 	await setbot.stop()
+	await app.stop()
 
 async def start_bot():
 	# sys.excepthook = except_hook
