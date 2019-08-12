@@ -87,12 +87,12 @@ async def except_hook(errtype, value, tback):
 	await setbot.send_message(Owner, text, reply_markup=button)
 
 async def reinitial():
-	await setbot.start()
 	await app.start()
-	await get_bot()
+	await setbot.start()
 	await get_self()
-	await setbot.stop()
+	await get_bot()
 	await app.stop()
+	await setbot.stop()
 
 async def start_bot():
 	# sys.excepthook = except_hook
