@@ -14,6 +14,10 @@ from nana import app, Owner, log, Command, ASSISTANT_BOT, setbot, USERBOT_VERSIO
 from nana.modules import ALL_MODULES
 from nana.assistant import ALL_SETTINGS
 
+try:
+	from nana import TEST_DEVELOP
+except ImportError:
+	TEST_DEVELOP = False
 
 BOT_RUNTIME = 0
 HELP_COMMANDS = {}
@@ -118,7 +122,10 @@ async def start_bot():
 	log.info("Assistant modules: " + str(ALL_SETTINGS))
 	log.info("-----------------------")
 	log.info("Bot run successfully!")
-	await setbot.idle()
+	if TEST_DEVELOP:
+		log.info("Test is passed!")
+	else:
+		await setbot.idle()
 
 if __name__ == '__main__':
 	BOT_RUNTIME = int(time.time())

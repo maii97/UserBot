@@ -65,6 +65,18 @@ Command = Config.Command
 NANA_WORKER = Config.NANA_WORKER
 ASSISTANT_WORKER = Config.ASSISTANT_WORKER
 
+try:
+	TEST_DEVELOP = Config.TEST_DEVELOP
+	if TEST_DEVELOP:
+		BOT_SESSION = Config.BOT_SESSION
+		APP_SESSION = Config.APP_SESSION
+		log.info("Testing mode activated!")
+	else:
+		raise AttributeError
+except AttributeError:
+	BOT_SESSION = "nana/session/ManageBot"
+	APP_SESSION = "nana/session/Nana"
+
 # APIs
 thumbnail_API = Config.thumbnail_API
 screenshotlayer_API = Config.screenshotlayer_API
@@ -132,8 +144,8 @@ BASE = declarative_base()
 SESSION = mulaisql()
 
 if ASSISTANT_BOT:
-	setbot = Client("nana/session/ManageBot", api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER, test_mode=TEST_MODE)
+	setbot = Client(BOT_SESSION, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER, test_mode=TEST_MODE)
 else:
 	setbot = None
 
-app = Client("nana/session/Nana", api_id=api_id, api_hash=api_hash, app_version=app_version, device_model=device_model, system_version=system_version, lang_code=lang_code, workers=NANA_WORKER, test_mode=TEST_MODE)
+app = Client(APP_SESSION, api_id=api_id, api_hash=api_hash, app_version=app_version, device_model=device_model, system_version=system_version, lang_code=lang_code, workers=NANA_WORKER, test_mode=TEST_MODE)
