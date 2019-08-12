@@ -42,57 +42,112 @@ OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
 REPOSITORY = "https://github.com/AyraHikari/Nana-TgBot"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI", "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 
-# Version
-lang_code = Config.lang_code
-device_model = Config.device_model
-app_version = "💝 Nana v{}".format(USERBOT_VERSION)
-system_version = Config.system_version
+ENV = bool(os.environ.get('ENV', False))
 
-# Must be filled
-api_id = Config.api_id
-api_hash = Config.api_hash
+if ENV:
+	# Version
+	lang_code = os.environ.get('lang_code', "en")
+	device_model = os.environ.get('device_model', "PC")
+	app_version = "💝 Nana v{}".format(USERBOT_VERSION)
+	system_version = os.environ.get('system_version', "Linux")
 
-# Required for some features
-# Set temp var for load later
-Owner = 0
-OwnerName = ""
-OwnerUsername = ""
-BotID = 0
-BotName = ""
-BotUsername = ""
-# From config
-Command = Config.Command
-NANA_WORKER = Config.NANA_WORKER
-ASSISTANT_WORKER = Config.ASSISTANT_WORKER
+	# Must be filled
+	api_id = os.environ.get('api_id', None)
+	api_hash = os.environ.get('api_hash', None)
 
-try:
-	TEST_DEVELOP = Config.TEST_DEVELOP
-	if TEST_DEVELOP:
-		BOT_SESSION = Config.BOT_SESSION
-		APP_SESSION = Config.APP_SESSION
-		log.info("Testing mode activated!")
-	else:
-		raise AttributeError
-except AttributeError:
-	BOT_SESSION = "nana/session/ManageBot"
-	APP_SESSION = "nana/session/Nana"
+	# Required for some features
+	# Set temp var for load later
+	Owner = 0
+	OwnerName = ""
+	OwnerUsername = ""
+	BotID = 0
+	BotName = ""
+	BotUsername = ""
+	# From config
+	Command = eval(os.environ.get('Command', '["!", ".", "-", "^"]'))
+	NANA_WORKER = int(os.environ.get('NANA_WORKER', 8))
+	ASSISTANT_WORKER = int(os.environ.get('ASSISTANT_WORKER', 2))
 
-# APIs
-thumbnail_API = Config.thumbnail_API
-screenshotlayer_API = Config.screenshotlayer_API
+	try:
+		TEST_DEVELOP = bool(os.environ.get('TEST_DEVELOP', False))
+		if TEST_DEVELOP:
+			BOT_SESSION = os.environ.get('BOT_SESSION', None)
+			APP_SESSION = os.environ.get('APP_SESSION', None)
+			log.info("Testing mode activated!")
+		else:
+			raise AttributeError
+	except AttributeError:
+		BOT_SESSION = "nana/session/ManageBot"
+		APP_SESSION = "nana/session/Nana"
 
-# LOADER
-USERBOT_LOAD = Config.USERBOT_LOAD
-USERBOT_NOLOAD = Config.USERBOT_NOLOAD
-ASSISTANT_LOAD = Config.ASSISTANT_LOAD
-ASSISTANT_NOLOAD = Config.ASSISTANT_NOLOAD
+	# APIs
+	thumbnail_API = os.environ.get('thumbnail_API', None)
+	screenshotlayer_API = os.environ.get('screenshotlayer_API', None)
 
-DB_URL = Config.DB_URL
-ASSISTANT_BOT = Config.ASSISTANT_BOT
-ASSISTANT_BOT_TOKEN = Config.ASSISTANT_BOT_TOKEN
-AdminSettings = Config.AdminSettings
-REMINDER_UPDATE = Config.REMINDER_UPDATE
-TEST_MODE = Config.TEST_MODE
+	# LOADER
+	USERBOT_LOAD = eval(os.environ.get('USERBOT_LOAD', "[]"))
+	USERBOT_NOLOAD = eval(os.environ.get('USERBOT_NOLOAD', "[]"))
+	ASSISTANT_LOAD = eval(os.environ.get('ASSISTANT_LOAD', "[]"))
+	ASSISTANT_NOLOAD = eval(os.environ.get('ASSISTANT_NOLOAD', "[]"))
+
+	DB_URL = os.environ.get('DB_URL', None)
+	ASSISTANT_BOT = os.environ.get('ASSISTANT_BOT', False)
+	ASSISTANT_BOT_TOKEN = os.environ.get('ASSISTANT_BOT_TOKEN', None)
+	AdminSettings = eval(os.environ.get('AdminSettings', "[]"))
+	REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
+	TEST_MODE = bool(os.environ.get('TEST_MODE', False))
+else:
+	# Version
+	lang_code = Config.lang_code
+	device_model = Config.device_model
+	app_version = "💝 Nana v{}".format(USERBOT_VERSION)
+	system_version = Config.system_version
+
+	# Must be filled
+	api_id = Config.api_id
+	api_hash = Config.api_hash
+
+	# Required for some features
+	# Set temp var for load later
+	Owner = 0
+	OwnerName = ""
+	OwnerUsername = ""
+	BotID = 0
+	BotName = ""
+	BotUsername = ""
+	# From config
+	Command = Config.Command
+	NANA_WORKER = Config.NANA_WORKER
+	ASSISTANT_WORKER = Config.ASSISTANT_WORKER
+
+	try:
+		TEST_DEVELOP = Config.TEST_DEVELOP
+		if TEST_DEVELOP:
+			BOT_SESSION = Config.BOT_SESSION
+			APP_SESSION = Config.APP_SESSION
+			log.info("Testing mode activated!")
+		else:
+			raise AttributeError
+	except AttributeError:
+		BOT_SESSION = "nana/session/ManageBot"
+		APP_SESSION = "nana/session/Nana"
+
+	# APIs
+	thumbnail_API = Config.thumbnail_API
+	screenshotlayer_API = Config.screenshotlayer_API
+
+	# LOADER
+	USERBOT_LOAD = Config.USERBOT_LOAD
+	USERBOT_NOLOAD = Config.USERBOT_NOLOAD
+	ASSISTANT_LOAD = Config.ASSISTANT_LOAD
+	ASSISTANT_NOLOAD = Config.ASSISTANT_NOLOAD
+
+	DB_URL = Config.DB_URL
+	ASSISTANT_BOT = Config.ASSISTANT_BOT
+	ASSISTANT_BOT_TOKEN = Config.ASSISTANT_BOT_TOKEN
+	AdminSettings = Config.AdminSettings
+	REMINDER_UPDATE = Config.REMINDER_UPDATE
+	TEST_MODE = Config.TEST_MODE
 
 gauth = GoogleAuth()
 
