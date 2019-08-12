@@ -30,8 +30,8 @@ except ModuleNotFoundError:
 	log.error("You need to place config.py in nana dir!")
 	quit(1)
 
-USERBOT_VERSION = "0.3.1"
-ASSISTANT_VERSION = "0.3.1"
+USERBOT_VERSION = "0.3.2"
+ASSISTANT_VERSION = "0.3.2"
 
 OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
 REPOSITORY = "https://github.com/AyraHikari/Nana-TgBot"

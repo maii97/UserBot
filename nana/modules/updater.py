@@ -41,6 +41,8 @@ async def initial_git(repo):
 	os.rename('LICENSE', 'nana-old/LICENSE')
 	os.rename('README.md', 'nana-old/README.md')
 	os.rename('requirements.txt', 'nana-old/requirements.txt')
+	os.rename('Procfile', 'nana-old/Procfile')
+	os.rename('runtime.txt', 'nana-old/runtime.txt')
 	update = repo.create_remote('master', REPOSITORY)
 	update.pull('master')
 	os.rename('nana-old/nana/config.py', 'nana/config.py')
