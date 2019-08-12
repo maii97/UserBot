@@ -1,7 +1,8 @@
 import time
 
-from nana import app, setbot, AdminSettings
-from nana.assistant.database.stickers_db import set_sticker_set, get_sticker_set
+from nana import app, setbot, AdminSettings, DB_AVAIABLE
+if DB_AVAIABLE:
+	from nana.assistant.database.stickers_db import set_sticker_set, get_sticker_set
 
 from pyrogram import Filters, MessageHandler, InlineKeyboardMarkup, ReplyKeyboardMarkup
 
@@ -12,6 +13,9 @@ TODEL = {}
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setsticker"]))
 async def get_stickers(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	global TEMP_KEYBOARD, USER_SET
 	await app.send_message("@Stickers", "/stats")
 	# app.read_history("@Stickers")
@@ -27,6 +31,8 @@ async def get_stickers(client, message):
 	# app.read_history("@Stickers")
 
 def get_stickerlist(message):
+	if not DB_AVAIABLE:
+		return
 	global TEMP_KEYBOARD, USER_SET
 	if message.from_user and message.from_user.id in list(USER_SET):
 		return True
@@ -36,6 +42,9 @@ def get_stickerlist(message):
 
 @setbot.on_message(get_stickerlist)
 async def set_stickers(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	global TEMP_KEYBOARD, USER_SET
 	if message.text in TEMP_KEYBOARD:
 		await client.delete_messages(message.chat.id, USER_SET[message.from_user.id])

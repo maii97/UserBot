@@ -2,7 +2,8 @@ import os
 
 from nana import app, Command, DB_AVAIABLE
 from pyrogram import Filters
-from nana.modules.database.chats_db import update_chat, get_all_chats
+if DB_AVAIABLE:
+	from nana.modules.database.chats_db import update_chat, get_all_chats
 
 
 MESSAGE_RECOUNTER = 0

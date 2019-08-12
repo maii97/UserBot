@@ -3,8 +3,9 @@ import math
 import os
 from PIL import Image
 
-from nana import app, setbot, Command
-from nana.assistant.database.stickers_db import get_sticker_set
+from nana import app, setbot, Command, DB_AVAIABLE
+if DB_AVAIABLE:
+	from nana.assistant.database.stickers_db import get_sticker_set
 
 from pyrogram import Filters
 
@@ -24,6 +25,9 @@ This command only for Assistant bot, to set your sticker pack. When sticker pack
 
 @app.on_message(Filters.user("self") & Filters.command(["kang"], Command))
 async def kang_stickers(client, message):
+	if not DB_AVAIABLE:
+		await message.edit("Your database is not avaiable!")
+		return
 	sticker_pack = get_sticker_set(message.from_user.id)
 	if not sticker_pack:
 		await message.edit("You're not setup sticker pack!\nCheck your assistant for more information!")

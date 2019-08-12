@@ -123,7 +123,7 @@ async def start_bot():
 	log.info("-----------------------")
 	log.info("Bot run successfully!")
 	if TEST_DEVELOP:
-		log.info("Test is passed!")
+		log.warning("Test is passed!")
 	else:
 		await setbot.idle()
 

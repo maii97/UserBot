@@ -21,8 +21,26 @@ from sqlalchemy import func, distinct, Column, String, UnicodeText, Integer
 # LOG_FORMAT = "[%(asctime)s.%(msecs)03d] %(filename)s:%(lineno)s %(levelname)s: %(message)s"
 # logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 # 
-logging.basicConfig(level=logging.INFO)
-log = logging.getLogger()
+ENV = bool(os.environ.get('ENV', False))
+if ENV:
+	TEST_DEVELOP = bool(os.environ.get('TEST_DEVELOP', False))
+else:
+	try:
+		from nana.config import Development as Config
+	except ModuleNotFoundError:
+		logging.basicConfig(level=logging.INFO)
+		log = logging.getLogger()
+		log.error("You need to place config.py in nana dir!")
+		quit(1)
+	TEST_DEVELOP = Config.TEST_DEVELOP
+
+if TEST_DEVELOP:
+	logging.basicConfig(level=logging.WARNING)
+	log = logging.getLogger()
+	log.warning("Testing mode activated!")
+else:
+	logging.basicConfig(level=logging.INFO)
+	log = logging.getLogger()
 
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
@@ -36,7 +54,6 @@ OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
 REPOSITORY = "https://github.com/AyraHikari/Nana-TgBot"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI", "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 
-ENV = bool(os.environ.get('ENV', False))
 BOT_SESSION = "nana/session/ManageBot"
 APP_SESSION = "nana/session/Nana"
 
@@ -73,7 +90,6 @@ if ENV:
 		if TEST_DEVELOP:
 			BOT_SESSION = os.environ.get('BOT_SESSION', None)
 			APP_SESSION = os.environ.get('APP_SESSION', None)
-			log.info("Testing mode activated!")
 		else:
 			raise AttributeError
 	except AttributeError:
@@ -95,11 +111,6 @@ if ENV:
 	REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
 	TEST_MODE = bool(os.environ.get('TEST_MODE', False))
 else:
-	try:
-		from nana.config import Development as Config
-	except ModuleNotFoundError:
-		log.error("You need to place config.py in nana dir!")
-		quit(1)
 
 	# Version
 	lang_code = Config.lang_code
@@ -133,7 +144,6 @@ else:
 		if TEST_DEVELOP:
 			BOT_SESSION = Config.BOT_SESSION
 			APP_SESSION = Config.APP_SESSION
-			log.info("Testing mode activated!")
 		else:
 			raise AttributeError
 	except AttributeError:

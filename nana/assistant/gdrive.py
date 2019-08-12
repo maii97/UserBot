@@ -6,7 +6,6 @@ from nana import app, setbot, AdminSettings, gauth
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
 from __main__ import get_runtime
 from nana.modules.chats import get_msgc
-from nana.modules.database.chats_db import get_all_chats
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["gdrive"]))
