@@ -42,7 +42,7 @@
       "value": "! ."
     },
     "AdminSettings": {
-      "description": "Fill value like above",
+      "description": "Fill your telegram id",
       "value": ""
     },
     "ASSISTANT_WORKER": {
@@ -99,6 +99,12 @@
     "ASSISTANT_NOLOAD": {
       "description": "(optional) Fill if you dont want to load that module",
       "required": false
+    },
+    "USERBOT_SESSION": {
+      "description": "[REQUIRED] For make a session: https://github.com/AyraHikari/pyrogram-session-maker"
+    },
+    "ASSISTANT_SESSION": {
+      "description": "[REQUIRED] For make a session: https://github.com/AyraHikari/pyrogram-session-maker"
     }
   },
   "addons": [
