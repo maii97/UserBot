@@ -6,7 +6,7 @@ class Config(object):
 	# Register here: https://my.telegram.org/apps
 	api_id = 12345
 	api_hash = "123456789abcdefghijklmnopqrstuvw"
-	DB_URL = "postgres://username:password@localhost:5432/database" # Your database URL
+	DATABASE_URL = "postgres://username:password@localhost:5432/database" # Your database URL
 
 	# Version
 	lang_code = "en" # Your language code
