@@ -1,4 +1,7 @@
 # Nana-TgBot
+
+[![Build Status](https://semaphoreci.com/api/v1/ayrahikari/nana-tgbot/branches/master/badge.svg)](https://semaphoreci.com/ayrahikari/nana-tgbot)
+
 ### Userbot + Assistant for Telegram
 
 ```
