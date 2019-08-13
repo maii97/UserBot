@@ -112,5 +112,5 @@ async def update_button(client, query):
 	await update_changelog(changelog)
 	await restart_all()
 
-if REMINDER_UPDATE:
+if REMINDER_UPDATE and not TEST_DEVELOP:
 	loop.create_task(update_checker())
