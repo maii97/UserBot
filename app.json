@@ -29,10 +29,6 @@
       "description": "Get this value from https://my.telegram.org/apps",
       "value": ""
     },
-    "DB_URL": {
-      "description": "Some modules need this to save some changes.",
-      "value": "postgres://username:password@localhost:5432/database"
-    },
     "Owner": {
       "description": "Go to some bot, and check your id there. Ex. Emilia or Rose.",
       "value": ""
