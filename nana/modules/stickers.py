@@ -41,13 +41,13 @@ async def kang_stickers(client, message):
 				await message.edit("You're not setup animation sticker pack!\nCheck your assistant for more information!")
 				await setbot.send_message(message.from_user.id, "Hello 🙂\nYou're look like want to steal a animation sticker, but sticker pack was not set. To set a sticker pack, type /setanimation and follow setup.")
 				return
-			await client.download_media(message.reply_to_message.sticker.file_id, file_name="nana/cache/sticker.tgs")
+			await client.download_media(message.reply_to_message.sticker, file_name="nana/cache/sticker.tgs")
 		else:
-			await client.download_media(message.reply_to_message.sticker.file_id, file_name="nana/cache/sticker.png")
+			await client.download_media(message.reply_to_message.sticker, file_name="nana/cache/sticker.png")
 	elif message.reply_to_message and message.reply_to_message.photo:
 		await client.download_media(message.reply_to_message.photo, file_name="nana/cache/sticker.png")
 	elif message.reply_to_message and message.reply_to_message.document and message.reply_to_message.document.mime_type == "image/png":
-		await client.download_media(message.reply_to_message.document.file_id, file_name="nana/cache/sticker.png")
+		await client.download_media(message.reply_to_message.document, file_name="nana/cache/sticker.png")
 	else:
 		await message.edit("Reply a sticker or photo to kang it!\nCurrent sticker pack is: {}\nCurrent animation pack is: {}".format(sticker_pack, animation_pack.sticker))
 		return
